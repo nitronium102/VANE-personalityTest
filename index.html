@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VANE TEST</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="container">
+    <article class="start">
+        <h1 class="mt-5 text-center" >나와 닮은 문화유산 찾기</h1>
+        <button type="button" class="btn btn-primary mt-5" onclick="start();">테스트 시작하기</button>    
+    </article>
+    <article class="question">
+        <div class="progress mt-5">
+            <div class="progress-bar" role="progressbar" style="width: calc(100/8*1%)"></div>
+        </div>
+        <h2 id="title" class = "text-center mt-5">문제</h2>
+        <input id="type" type="hidden" value="EI">
+        <button id="A" type="button" class="btn btn-primary mt-5">Primary</button>
+        <button id="B" type="button" class="btn btn-primary mt-5">Primary</button>
+    </article>
+    <article class="result">
+        <img id="img" class="mt-5" src="images/01-Dangun.png" alt="animal">
+        <h2 id="heritage" class="text-center mt-5">문화 유산 이름</h2>
+        <h3 id="explain"  class="text-center mt-5">설명</h3>
+    </article>
+    <input type="hidden" id="EI" value="0">
+    <input type="hidden" id="SN" value="0">
+    <input type="hidden" id="TF" value="0">
+    <input type="hidden" id="JP" value="0">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script>
+        let num = 1; // 현재 문제 번호
+
+        /* 문제 리스트 */
+        let q = {
+            1:{"title":"문제 1번", "type":"EI", "A":"E", "B":"I"},
+            2:{"title":"문제 2번", "type":"SN", "A":"S", "B":"N"},
+            3:{"title":"문제 3번", "type":"SN", "A":"S", "B":"N"},
+            4:{"title":"문제 4번", "type":"SN", "A":"S", "B":"N"},
+            5:{"title":"문제 5번", "type":"TF", "A":"T", "B":"F"},
+            6:{"title":"문제 6번", "type":"TF", "A":"T", "B":"F"},
+            7:{"title":"문제 7번", "type":"TF", "A":"T", "B":"F"},
+            8:{"title":"문제 8번", "type":"JP", "A":"J", "B":"P"}
+        };
+
+        /* 결과 리스트 */
+        let result = {
+            "ENFP": {"heritage": "직지", "explain":"직지 설명", "img":"images/08-Jikji.png"},
+            "INTJ": {"heritage": "인티제", "explain":"인티제 설명", "img":"images/11-Yi Sunsin.png"},
+            "ESTJ": {"heritage": "이순신", "explain":"이순신 설명", "img":"images/11-Yi Sunsin.png"},
+            "ENTP": {"heritage": "이순신", "explain":"이순신 설명", "img":"images/11-Yi Sunsin.png"},
+            "ISTP": {"heritage": "이순신", "explain":"이순신 설명", "img":"images/11-Yi Sunsin.png"},
+            "ISFP": {"heritage": "이순신", "explain":"이순신 설명", "img":"images/11-Yi Sunsin.png"},
+            "INTP": {"heritage": "이순신", "explain":"이순신 설명", "img":"images/11-Yi Sunsin.png"},
+            "INFP": {"heritage": "이순신", "explain":"이순신 설명", "img":"images/11-Yi Sunsin.png"},
+            "INFJ": {"heritage": "이순신", "explain":"이순신 설명", "img":"images/11-Yi Sunsin.png"},
+            "ENTJ": {"heritage": "이순신", "explain":"이순신 설명", "img":"images/11-Yi Sunsin.png"}
+        };
+
+        /* 시작 버튼을 눌렀을 때 */
+        function start(){
+            $(".start").hide();
+            $(".question").show();
+            console.log("창 변화");
+            next();
+        }
+
+        /* 버튼을 눌렀을 때 */
+        $("#A").click(function(){
+            let type = $("#type").val(); // id=type의 값 가져옴(EI, SN, TF, JP)
+            let preValue = $("#"+type).val(); // 해당 태그의 value 확인
+            $("#"+type).val(parseInt(preValue)+1); // 버튼 누를 때마다 +1
+            next();
+        });
+
+        $("#B").click(function(){
+            next();
+        });
+
+        /* 다음 문제로 넘어가기 */
+        function next(){
+            /* 결과창으로 넘어가기*/
+            if (num == 9){
+                $(".question").hide();
+                $(".result").show();
+                /* 성향 계산 */
+                let mbti = "";
+                ($("#EI").val() < 1) ? mbti += "I" : mbti += "E";
+                ($("#SN").val() < 2) ? mbti += "N" : mbti += "S";
+                ($("#TF").val() < 2) ? mbti += "F" : mbti += "T";
+                ($("#JP").val() < 1) ? mbti += "P" : mbti += "J";
+                alert(mbti);
+                /* 결과창 값 변경 */
+                $("#img").attr("src",result[mbti]["img"]);
+                $("#heritage").html(result[mbti]["heritage"]);
+                $("#explain").html(result[mbti]["explain"]);
+            }
+            else {
+                $(".progress-bar").attr('style', 'width: calc(100/8*'+num+'%)');
+                console.log(q[num]["type"]);
+                $("#title").html(q[num]["title"]);
+                $("#type").val(q[num]["type"]);
+                $("#A").html(q[num]["A"]);
+                $("#B").html(q[num]["B"]);
+                num++;
+            }
+        }
+
+    </script>
+</body>
+</html>
