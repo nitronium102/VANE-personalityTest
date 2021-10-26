@@ -2,8 +2,9 @@
 body {
     background-color: #f5ece3;
     color: black;
-    font-family: Courier, monospace;
+    font-family: Courier;
 }
+/* font-family: Courier, monospace; */
 
 article {
     display : flex;
@@ -21,9 +22,22 @@ article {
     height: 100vh;
     vertical-align: middle;
 } 
+/*  height: 100vh; */
 
 .question {
     display: none;
+}
+
+#A, #B{
+    font-size: 20px;
+}
+
+#C {
+    width : 300px;
+}
+
+#title {
+    font-size: 25px;
 }
 
 .btn {
@@ -33,7 +47,6 @@ article {
     background-color : #B38F68;
     text-align: center;
     vertical-align: middle;
-    width : 400px;
     cursor: pointer;
     border: 1px solid transparent;
     padding: .375rem .75rem;
@@ -87,7 +100,11 @@ article {
 }
 
 #img {
-    width: 15%;
-    height: 15%;
+    width: 300px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+.share {
     margin: 0 auto;
 }
